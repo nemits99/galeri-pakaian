@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Pakaian</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 20px;
+           
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        h1 {
+            color:#9595ff;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-align: left;
+        }
+
+        .product-gallery {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            padding: 20px;
+          
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            height: 80%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+    width: 100%; 
+    height: 70%; 
+    object-fit: cover; 
+    aspect-ratio: auto; 
+}
+
+
+
+        .product-card h3 {
+            margin: 15px 0 5px 0;
+            padding: 0 15px;
+            font-size: 1.25rem;
+            color: #333;
+        }
+
+        .product-card p {
+            padding: 0 15px 15px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        button {
+            display: block;
+            width: 80%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 15px auto;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            margin-top: 30px;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .product-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            button {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .product-card {
+                padding: 10px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    
+        .modal {
+    display: none; /* Sembunyikan modal secara default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Transparansi gelap */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Konten modal */
+.modal-content {
+    font-size: large;
+    background-color: #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+#modalTitle {
+    font-size: 2rem; 
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #2c2c2c; /* Warna teks judul */
+}
+
+/* Ukuran teks untuk konten modal */
+#modalContent {
+    font-size: 1.5rem; 
+    line-height: 1.6; 
+    color: #0f0f0f; 
+    margin-bottom: 20px;
+}
+/* Tombol close */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+</style>
+
+
+</head>
+<body>
+    <header>
+        <h1>Galeri Pakaian Almahira</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="openPopup('Home', 'Selamat datang di halaman utama kami!')">Home</a></li>
+                <li><a href="#" onclick="openPopup('Produk', 'Temukan produk terbaik kami di sini!')">Produk</a></li>
+                <li><a href="#" onclick="openPopup('Tentang Kami', 'Pelajari lebih lanjut tentang kami.')">Tentang Kami</a></li>
+                <li><a href="#" onclick="openPopup('Kontak', 'Hubungi kami untuk informasi lebih lanjut.')">Kontak</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Modal Popup -->
+        <div id="popupModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closePopup()">&times;</span>
+                <h2 id="modalTitle"></h2>
+                <p id="modalContent"></p>
+            </div>
+        </div>
+        
+    </header>
+
+    <section class="product-gallery">
+        <div class="product-card">
+            <img src="P1.jpeg" alt="Pakaian 1">
+            <h3>Pakaian Muslim</h3>
+            <p>Deskripsi singkat pakaian casual yang nyaman.</p>
+            <button onclick="addToCart('Pakaian Casual')">Tambah ke Keranjang</button>
+        </div>
+        <div class="product-card">
+            <img src="P2.jpeg" alt="Pakaian 2">
+            <h3>Pakaian Muslim</h3>
+            <p>Deskripsi singkat pakaian formal elegan.</p>
+            <button onclick="addToCart('Pakaian Formal')">Tambah ke Keranjang</button>
+        </div>
+        <div class="product-card">
+            <img src="P3.jpeg" alt="Pakaian 3">
+            <h3>Pakaian Muslim</h3>
+            <p>Deskripsi singkat pakaian olahraga yang nyaman.</p>
+            <button onclick="addToCart('Pakaian Olahraga')">Tambah ke Keranjang</button>
+        </div>
+        <div class="product-card">
+            <img src="P4.jpeg" alt="Pakaian 3">
+            <h3>Pakaian Muslim</h3>
+            <p>Deskripsi singkat pakaian olahraga yang nyaman.</p>
+            <button onclick="addToCart('Pakaian Olahraga')">Tambah ke Keranjang</button>
+        </div>
+        <div class="product-card">
+            <img src="P5.jpeg" alt="Pakaian 3">
+            <h3>Pakaian Muslim</h3>
+            <p>Deskripsi singkat pakaian olahraga yang nyaman.</p>
+            <button onclick="addToCart('Pakaian Olahraga')">Tambah ke Keranjang</button>
+        </div>
+        <div class="product-card">
+            <img src="P6.jpeg" alt="Pakaian 3">
+            <h3>Pakaian Muslim</h3>
+            <p>Deskripsi singkat pakaian olahraga yang nyaman.</p>
+            <button onclick="addToCart('Pakaian Olahraga')">Tambah ke Keranjang</button>
+        </div>
+        
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Display Pakaian</p>
+    </footer>
+
+    <script>
+        function addToCart(productName) {
+            alert(`${productName} telah ditambahkan ke keranjang.`);
+        }
+    </script>
+   <script>
+    function openPopup(title, content) {
+        // Set judul dan konten di dalam modal
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalContent').textContent = content;
+    
+        // Tampilkan modal
+        document.getElementById('popupModal').style.display = 'flex';
+    }
+    
+    function closePopup() {
+        // Sembunyikan modal
+        document.getElementById('popupModal').style.display = 'none';
+    }
+    </script>
+    
+        
+</body>
+</html>
